@@ -28,13 +28,14 @@
 	];
 
 	let language: typeof languages;
+	let strength: number = 128;
 	let mnemonic: string = '';
 	let passphrase: string = '';
 	let accountIndex: number = 0;
 	let privateKey: string = '';
 
 	const generateSeedWord = (): void => {
-		mnemonic = generateMnemonic(language.list);
+		mnemonic = generateMnemonic(language.list, strength);
 	};
 
 	const generateKey = (): void => {
@@ -47,6 +48,11 @@
 	🗨️: <select bind:value={language}>
 		{#each languages as lang}
 			<option value={lang}>{lang.name}</option>
+		{/each}
+	</select>
+	<select bind:value={strength}>
+		{#each [128, 256] as v}
+			<option value={v}>{v}</option>
 		{/each}
 	</select><button on:click={generateSeedWord}>🎲</button>
 </p>
@@ -75,7 +81,7 @@
 <style>
 	textarea {
 		width: 300px;
-		height: 50px;
+		height: 100px;
 		resize: none;
 	}
 </style>
